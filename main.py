@@ -2,18 +2,11 @@ import requests
 
 url = "https://employability-portal.gupy.io/api/v1/jobs?"
 
-# headers = {
-#     "Authorization": "Bearer YOUR_API_TOKEN"
-# }
-params = {
-    "jobName": "dados",
-    # "limit": 12,
-    # "offset": 0
-}
+params = {"jobName": "dados"}
+response = requests.get(url, params = params)
 
-response = requests.get(url
-                        , params=params
-                        )
+# print(response.json())
 
-print(response.json())
-# "SELECT * FROM jobs WHERE name like '%dados%' LIMIT 400 OFFSET 0"
+data = response.json()
+
+print(data.get("pagination"))
