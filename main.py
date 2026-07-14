@@ -1,15 +1,16 @@
 import requests
+import json
 
 url = "https://employability-portal.gupy.io/api/v1/jobs?"
 
 params = {"jobName": "dados"}
 response = requests.get(url, params = params)
 
-# data = response.json()
-
-# print(data.get("pagination"))
-
 data = response.json()
+
+with open("resultado_api.json", "w", encoding="utf-8") as arquivo:
+    json.dump(data, arquivo, ensure_ascii=False, indent=4)
+
 pagination = data.get("pagination", {})
 
 total = pagination.get("total", 0)
@@ -28,3 +29,5 @@ print("limit:", limit)
 print("offset:", offset)
 print("total_posicoes:", total_posicoes)
 print("total_offset:", total_offset)
+
+
