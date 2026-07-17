@@ -6,42 +6,58 @@ O objetivo do codigo e consultar vagas na API da Gupy, buscando por um termo esp
 
 ## O que o codigo faz
 
-1. Instala e utiliza a biblioteca `requests`.
-2. Faz uma requisicao para a API:
+1. Importa as bibliotecas `requests`, `json` e `math`.
+2. Faz uma requisição para a API:
    `https://employability-portal.gupy.io/api/v1/jobs`
 3. Busca os dados em formato JSON.
-4. Verifica a paginacao retornada pela API, por exemplo:
-   `pagination: {"total": 100, "limit": 12, "offset": 0}`
-5. Calcula quantas paginas precisam ser consultadas com base em `total / limit`.
-6. Arredonda esse valor para cima com `math.ceil`.
-   Exemplo:
-   `100 / 12 = 8,33`, entao o total de paginas sera `9`.
-7. Percorre os offsets de `0` ate `8` para buscar todas as vagas disponiveis.
-8. Junta todos os resultados em uma unica estrutura final.
+4. Exibe no terminal o conteúdo retornado na primeira requisição.
+5. Lê as informações de paginação presentes em `pagination`, como:
+   `total`, `limit` e `offset`.
+6. Calcula a quantidade de posições paginadas com base em `total / limit`.
+7. Usa `math.ceil()` para arredondar esse valor para cima.
+8. Percorre os valores de `offset` de `0` até `total_offset - 1`.
+9. Faz uma nova requisição para cada `offset`.
+10. Armazena cada resposta retornada em uma lista chamada `resultados_offsets`.
+11. Salva essa lista no arquivo `resultado_api.json`.
 
 ## Como a logica funciona
 
-- `total`: quantidade total de vagas encontradas.
-- `limit`: quantidade de registros retornados por pagina.
-- `offset`: indice da pagina consultada.
+* `total`: quantidade total de vagas encontradas.
+* `limit`: quantidade de registros retornados pela API em cada resposta.
+* `offset`: valor utilizado para navegar entre os resultados paginados.
+
+No código atual, o valor de `total / limit` é usado para estimar quantas posições paginadas precisam ser consultadas. Em seguida, `math.ceil()` garante que, mesmo quando a divisão não for exata, a última parte dos resultados também seja considerada.
+
+Exemplo:
+
+* `total = 644`
+* `limit = 10`
+* `total / limit = 64.4`
+* `math.ceil(64.4) = 65`
+
 
 Com isso, o programa descobre quantas paginas existem e faz novas requisicoes ate trazer todos os dados da busca.
 
-## Exemplo do retorno final
+## Estrutura do arquivo gerado
 
-O script retorna um dicionario com:
+O arquivo `resultado_api.json` será salvo com uma lista de respostas da API, contendo os dados retornados em cada requisição feita para cada `offset` consultado.
 
-- termo pesquisado (`jobName`)
-- total de vagas
-- limite por pagina
-- quantidade de paginas
-- offsets consultados
-- lista completa de vagas retornadas pela API
+## Requisitos
 
-## Requisito
-
-Instale a dependencia antes de executar:
+Instale a dependência antes de executar:
 
 ```bash
 pip install requests
 ```
+
+## Como executar
+
+No terminal, rode:
+
+```bash
+python main.py
+```
+
+## Observação
+
+Este projeto tem foco em estudo da lógica de paginação e consumo de APIs. Dependendo do comportamento da API, pode ser necessário ajustar a forma de avanço do `offset`, o tratamento de erros e o intervalo entre as requisições.
