@@ -44,19 +44,42 @@ O arquivo `resultado_api.json` será salvo com uma lista de respostas da API, co
 
 ## Requisitos
 
-Instale a dependência antes de executar:
+Este projeto foi executado em Windows, utilizando Python 3.14.5.
 
-```bash
-pip install requests
-```
+1. Instalar o Python
 
-## Como executar
+   Baixe e instale o Python pelo site oficial:
 
-No terminal, rode:
+   `https://www.python.org/downloads/`
 
-```bash
-python main.py
-```
+   ```python 
+   Durante a instalação no Windows, é recomendado marcar a opção para adicionar o Python ao PATH.
+   ```
+2. Criar um ambiente virtual
+
+   Após instalar o Python, abra o terminal na pasta do projeto e execute:
+
+   `python -m venv venv`
+
+   Esse comando cria um ambiente virtual chamado venv.
+
+3. Ativar o ambiente virtual
+
+   Depois, ative o ambiente virtual com o comando:
+
+   `.\venv\Scripts\activate`
+
+   O terminal passará a mostrar (venv) no início da linha.
+
+4. Instalar a biblioteca requests
+
+   Com o ambiente virtual ativado, instale a dependência necessária:
+
+   `pip install requests`
+
+   Com o ambiente virtual ativo e a biblioteca instalada, execute o projeto com:
+
+   `python main.py`
 
 ## Observação
 
